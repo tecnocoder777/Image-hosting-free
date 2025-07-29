@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Free Image Hosting</title>
+  <title>My Free Image Host</title>
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-    input, button { padding: 10px; margin: 10px; }
-    img { max-width: 90%; margin-top: 20px; }
+    body { text-align: center; padding: 40px; font-family: sans-serif; }
+    input, button { margin: 10px; padding: 10px; }
+    img { margin-top: 20px; max-width: 90%; }
   </style>
 </head>
 <body>
   <h2>Upload Image</h2>
-  <form id="uploadForm" enctype="multipart/form-data" method="POST" action="upload.php">
+  <form id="form" enctype="multipart/form-data">
     <input type="file" name="file" accept="image/*" required><br>
     <button type="submit">Upload</button>
   </form>
   <div id="result"></div>
+
+<script>
+  const form = document.getElementById('form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    document.getElementById('result').innerHTML = "Uploading...";
+
+    const res = await fetch('/upload', {
+      method: 'POST',
+      body: data
+    });
+
+    const result = await res.json();
+    if (result.url) {
+      document.getElementById('result').innerHTML = `
+        <p>Image URL:</p>
+        <a href="${result.url}" target="_blank">${result.url}</a><br>
+        <img src="${result.url}">
+      `;
+    } else {
+      document.getElementById('result').innerText = "Upload failed";
+    }
+  });
+</script>
 </body>
 </html>
