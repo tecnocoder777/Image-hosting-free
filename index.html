@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Free Image Hosting</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    input, button { padding: 10px; margin: 10px; }
+    img { max-width: 90%; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Upload Image</h2>
+  <form id="uploadForm" enctype="multipart/form-data" method="POST" action="upload.php">
+    <input type="file" name="file" accept="image/*" required><br>
+    <button type="submit">Upload</button>
+  </form>
+  <div id="result"></div>
+</body>
+</html>
